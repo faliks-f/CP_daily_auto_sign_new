@@ -19,16 +19,22 @@ def job():
         message = ""
         if need_send == "True":
             mail = Mail(email_configure["token"], email_configure["sender"], email_configure["receivers"])
-        for student in students:
-            s = get_login_session(student["account"], student["password"])
-            if 'iPlanetDirectoryPro' not in s.cookies:
-                message += student["name"] + " fail\n"
-            else:
-                if sign(s):
-                    message += student["name"] + " success\n"
-                else:
+        try:
+            for student in students:
+                s = get_login_session(student["account"], student["password"])
+                if 'iPlanetDirectoryPro' not in s.cookies:
                     message += student["name"] + " fail\n"
-            print(message)
+                else:
+                    if sign(s):
+                        message += student["name"] + " success\n"
+                    else:
+                        message += student["name"] + " fail\n"
+        except Exception as e:
+            print(e)
+            message = ""
+            for student in students:
+                message = student["name"] + "fail\n"
+        print(message)
         if mail is not None:
             subject = time.strftime("%Y-%m-%d %H:%M", time.localtime()) + "打卡结果"
             mail.send(subject, message)
