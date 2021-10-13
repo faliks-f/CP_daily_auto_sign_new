@@ -23,21 +23,25 @@ def job():
             for student in students:
                 s = get_login_session(student["account"], student["password"])
                 if 'iPlanetDirectoryPro' not in s.cookies:
-                    message += student["name"] + " fail\n"
+                    message += student["name"] + " fail! Login Error! Please check account and password!\n"
                 else:
                     if sign(s):
                         message += student["name"] + " success\n"
                     else:
-                        message += student["name"] + " fail\n"
+                        message += student["name"] + " fail! Login Success! Check Error!\n"
         except Exception as e:
             print(e)
             message = ""
             for student in students:
-                message = student["name"] + "fail\n"
+                message = student["name"] + "fail! Configure Error!\n"
         print(message)
-        if mail is not None:
-            subject = time.strftime("%Y-%m-%d %H:%M", time.localtime()) + "打卡结果"
-            mail.send(subject, message)
+        try:
+            if mail is not None:
+                subject = time.strftime("%Y-%m-%d %H:%M", time.localtime()) + "打卡结果"
+                mail.send(subject, message)
+        except Exception as e:
+            print("Email not send!")
+            print(e)
 
 
 def sign_thread(threadName):

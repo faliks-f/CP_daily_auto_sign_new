@@ -21,6 +21,22 @@ def get_wid():
     return wid
 
 
+def is_checked(last_time, now_time):
+    last_date = last_time.split(" ")[0].split("-")
+    now_date = now_time.split(" ")[0].split("-")
+    if len(last_date) != 3 and len(now_date) != 3:
+        return False
+    if last_date[0] != now_date[0] or last_date[1] != now_date[1] or last_date[2] != now_date[2]:
+        return False
+    last_hour = int(last_time.split(" ")[1].split(":")[0])
+    now_hour = int(now_time.split(" ")[1].split(":")[0])
+    if last_hour < 12 and now_hour < 12:
+        return True
+    if last_hour >= 12 and now_hour >= 12:
+        return True
+    return False
+
+
 def sign(s):
     try:
         res = s.get(url=url)
@@ -35,11 +51,13 @@ def sign(s):
         data = res.json()["datas"]["getMyDailyReportDatas"]["rows"][0]
         res = s.post(url=url6)
         time = res.json()["date"].replace("/", "-")
+        if is_checked(data["FILL_TIME"], time):
+            return True
+        check_time = data["FILL_TIME"]
         data["FILL_TIME"] = time
         data["TODAY_TEMPERATURE"] = "001"
         data["TODAY_TEMPERATURE_DISPLAY"] = "36℃及以下"
         data["WID"] = get_wid()
-        print(time.split(" ")[1].split(":")[0])
         if int(time.split(" ")[1].split(":")[0]) < 12:
             data["BY3"] = "001"
             data["BY3_DISPLAY"] = "晨间打卡"
