@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import random
+import json
 
 url = "http://ehallapp.njit.edu.cn/publicapp/sys/lwNjitHealthInfoDailyClock/configSet/noraml/getRouteConfig.do?v=06320772315700147"
 url1 = "http://ehallapp.njit.edu.cn/publicapp/sys/emappagelog/config/lwNjitHealthInfoDailyClock.do"
@@ -8,7 +9,7 @@ url2 = "http://ehallapp.njit.edu.cn/publicapp/sys/lwNjitHealthInfoDailyClock/mod
 url3 = "http://ehallapp.njit.edu.cn/publicapp/sys/lwNjitHealthInfoDailyClock/modules/healthClock.do"
 url4 = "http://ehallapp.njit.edu.cn/publicapp/sys/lwNjitHealthInfoDailyClock/modules/healthClock/getClockTimeByPersonType.do"
 url5 = "http://ehallapp.njit.edu.cn/publicapp/sys/lwNjitHealthInfoDailyClock/modules/healthClock/getMyDailyReportDatas.do"
-url5 = "http://ehallapp.njit.edu.cn/publicapp/sys/lwNjitHealthInfoDailyClock/modules/healthClock/getMyDailyReportDatas.do"
+# url5 = "http://ehallapp.njit.edu.cn/publicapp/sys/lwNjitHealthInfoDailyClock/modules/healthClock/getMyDailyReportDatas.do"
 url6 = "http://ehallapp.njit.edu.cn/publicapp/sys/lwpub/api/getServerTime.do"
 url7 = "http://ehallapp.njit.edu.cn/publicapp/sys/lwNjitHealthInfoDailyClock/modules/healthClock/T_HEALTH_DAILY_INFO_SAVE.do"
 
@@ -54,7 +55,16 @@ def sign(s):
         if is_checked(data["FILL_TIME"], time):
             return True
         check_time = data["FILL_TIME"]
+        data["CZR"] = None
+        data["CZZXM"] = None
+        data["CHECKED"] = "YES"
         data["FILL_TIME"] = time
+        data["NEED_CHECKIN_DATA"] = time.split(" ")[0]
+        data["CREATED_AT"] = time
+        yestday = time.split(" ")[0].split("-")[-1]
+        czrq = time.split(" ")[0].split("-")[0] + "-" + time.split(" ")[0].split("-")[1] + "-" + str(int(yestday) - 1) \
+               + " 23:55:57"
+        data["CZRQ"] = czrq
         data["TODAY_TEMPERATURE"] = "001"
         data["TODAY_TEMPERATURE_DISPLAY"] = "36℃及以下"
         data["WID"] = get_wid()
@@ -70,3 +80,5 @@ def sign(s):
     except Exception as e:
         print(e)
     return False
+
+
