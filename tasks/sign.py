@@ -14,11 +14,11 @@ url6 = "http://ehallapp.njit.edu.cn/publicapp/sys/lwpub/api/getServerTime.do"
 url7 = "http://ehallapp.njit.edu.cn/publicapp/sys/lwNjitHealthInfoDailyClock/modules/healthClock/T_HEALTH_DAILY_INFO_SAVE.do"
 
 
-def get_wid():
-    wid = ""
-    data_list = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    for i in range(32):
-        wid += data_list[random.randint(0, 25)]
+def get_wid(s, batch_code):
+    wid_url = "http://ehallapp.njit.edu.cn/publicapp/sys/lwNjitHealthInfoDailyClock/modules/healthClock/getMyTodayReportWid.do"
+    params = {"pageNumber": 1, "BATCH_CODE": batch_code}
+    res = s.post(wid_url, params=params)
+    wid = str(res.json()["datas"]["getMyTodayReportWid"]["rows"][0]["WID"])
     return wid
 
 
@@ -67,18 +67,16 @@ def sign(s):
         data["CZRQ"] = czrq
         data["TODAY_TEMPERATURE"] = "001"
         data["TODAY_TEMPERATURE_DISPLAY"] = "36℃及以下"
-        data["WID"] = get_wid()
         if int(time.split(" ")[1].split(":")[0]) < 12:
             data["BY3"] = "001"
             data["BY3_DISPLAY"] = "晨间打卡"
         else:
             data["BY3"] = "002"
             data["BY3_DISPLAY"] = "晚间打卡"
+        data["WID"] = get_wid(s, data["BY3"])
         res = s.post(url=url7, params=data)
         if res.json()["datas"]["T_HEALTH_DAILY_INFO_SAVE"]:
             return True
     except Exception as e:
         print(e)
     return False
-
-
