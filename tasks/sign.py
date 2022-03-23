@@ -100,6 +100,21 @@ def sign(s):
         # BY10	"0"
         data["BY10_DISPLAY"] = "否"
         data["BY10"] = "0"
+        # 本人及共同居住人员是否有近14天进口冷链食品(货物)接触史
+        # BY11_DISPLAY	"否"
+        # BY11	"0"
+        data["BY11_DISPLAY"] = "否"
+        data["BY11"] = "0"
+        # 本人及其共同居住人员是否有近3个月境外旅居史
+        # BY12_DISPLAY	"否"
+        # BY12	"0"
+        data["BY12_DISPLAY"] = "否"
+        data["BY12"] = "0"
+        # 本人及其共同居住人员是否有近14天省外旅居史
+        # BY13_DISPLAY	"否"
+        # BY13	"0"
+        data["BY13_DISPLAY"] = "否"
+        data["BY13"] = "0"
         # TAG END fields changed since 2022-03-23
         if int(time.split(" ")[1].split(":")[0]) < 12:
             data["BY3"] = "001"
