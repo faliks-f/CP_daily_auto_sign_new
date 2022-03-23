@@ -62,8 +62,45 @@ def sign(s):
         data["CHECKED"] = "YES"
         data["FILL_TIME"] = time
         data["CREATED_AT"] = time
-        data["TODAY_TEMPERATURE"] = "001"
-        data["TODAY_TEMPERATURE_DISPLAY"] = "36℃及以下"
+        # TAG BEGIN fields changed since 2022-03-23
+        data["TODAY_TEMPERATURE"] = "007"
+        data["TODAY_TEMPERATURE_DISPLAY"] = "是"
+        # 新学期开学以来是否返校
+        # BY4_DISPLAY	"是"
+        # BY4	"1"
+        data["BY4_DISPLAY"] = "是"
+        data["BY4"] = "1"
+        # 是否处于南京市外中高风险地区
+        # BY5_DISPLAY	"否"
+        # BY5	"0"
+        data["BY5_DISPLAY"] = "否"
+        data["BY5"] = "0"
+        # 近14天是否有南京市外中高风险地区旅居史
+        # BY6_DISPLAY	"否"
+        # BY6	"0"
+        data["BY6_DISPLAY"] = "否"
+        data["BY6"] = "0"
+        # 近14天是否与确诊病例、疑似病例或者无症状感染者有接触
+        # BY7_DISPLAY	"否"
+        # BY7	"0"
+        data["BY7_DISPLAY"] = "否"
+        data["BY7"] = "0"
+        # 共同居住人员身体状况
+        # BY8_DISPLAY	"无以上状况"
+        # BY8	"011"
+        data["BY8_DISPLAY"] = "无以上状况"
+        data["BY8"] = "011"
+        # 共同居住人员近14天是否有南京市外中高风险地区旅居史
+        # BY9_DISPLAY	"否"
+        # BY9	"0"
+        data["BY9_DISPLAY"] = "否"
+        data["BY9"] = "0"
+        # 今日是否核酸检测
+        # BY10_DISPLAY	"否"
+        # BY10	"0"
+        data["BY10_DISPLAY"] = "否"
+        data["BY10"] = "0"
+        # TAG END fields changed since 2022-03-23
         if int(time.split(" ")[1].split(":")[0]) < 12:
             data["BY3"] = "001"
             data["BY3_DISPLAY"] = "晨间打卡"
