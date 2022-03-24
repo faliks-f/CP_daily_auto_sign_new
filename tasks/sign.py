@@ -52,7 +52,6 @@ def sign(s):
                   "pageSize": 1}
         res = s.post(url=url5, params=params)
         data = res.json()["datas"]["getMyDailyReportDatas"]["rows"][0]
-        print(data)
         res = s.post(url=url6)
         time = res.json()["date"].replace("/", "-")
         if is_checked(data["FILL_TIME"], time):
