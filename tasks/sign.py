@@ -52,6 +52,7 @@ def sign(s):
                   "pageSize": 1}
         res = s.post(url=url5, params=params)
         data = res.json()["datas"]["getMyDailyReportDatas"]["rows"][0]
+        print(data)
         res = s.post(url=url6)
         time = res.json()["date"].replace("/", "-")
         if is_checked(data["FILL_TIME"], time):
@@ -62,8 +63,6 @@ def sign(s):
         data["CHECKED"] = "YES"
         data["FILL_TIME"] = time
         data["CREATED_AT"] = time
-        data["TODAY_TEMPERATURE"] = "001"
-        data["TODAY_TEMPERATURE_DISPLAY"] = "36℃及以下"
         if int(time.split(" ")[1].split(":")[0]) < 12:
             data["BY3"] = "001"
             data["BY3_DISPLAY"] = "晨间打卡"
@@ -74,10 +73,12 @@ def sign(s):
         data["WID"] = wid
         data["CZRQ"] = czrq
         data["NEED_CHECKIN_DATE"] = need_chk_date
-        # print(data)
         res = s.post(url=url7, params=data)
         if res.json()["datas"]["T_HEALTH_DAILY_INFO_SAVE"]:
             return True
     except Exception as e:
         print(e)
     return False
+
+
+

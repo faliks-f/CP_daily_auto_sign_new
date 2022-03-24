@@ -23,6 +23,9 @@ v3.2
 v3.3
 - 修复了打卡bug
 
+v4.0
+- 适配新的打卡系统
+
 ## 签到配置说明
 在configure.json下的students字段配置账号密码  
 配置示例见configure.json  
