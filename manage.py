@@ -45,8 +45,8 @@ def job():
 
 
 def sign_thread(threadName):
-    schedule.every().day.at("07:10").do(job)
-    schedule.every().day.at("12:10").do(job)
+    # changed to only one check in per day since 2022-03-25
+    schedule.every().day.at("08:22").do(job)
     while True:
         schedule.run_pending()
         time.sleep(1)

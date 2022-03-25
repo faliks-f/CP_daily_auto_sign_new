@@ -31,13 +31,8 @@ def is_checked(last_time, now_time):
         return False
     if last_date[0] != now_date[0] or last_date[1] != now_date[1] or last_date[2] != now_date[2]:
         return False
-    last_hour = int(last_time.split(" ")[1].split(":")[0])
-    now_hour = int(now_time.split(" ")[1].split(":")[0])
-    if last_hour < 12 and now_hour < 12:
-        return True
-    if last_hour >= 12 and now_hour >= 12:
-        return True
-    return False
+    # changed to only one check in per day since 2022-03-25
+    return True
 
 
 def sign(s):
@@ -116,12 +111,9 @@ def sign(s):
         data["BY13_DISPLAY"] = "否"
         data["BY13"] = "0"
         # TAG END fields changed since 2022-03-23
-        if int(time.split(" ")[1].split(":")[0]) < 12:
-            data["BY3"] = "001"
-            data["BY3_DISPLAY"] = "晨间打卡"
-        else:
-            data["BY3"] = "002"
-            data["BY3_DISPLAY"] = "晚间打卡"
+        # only one check in per day since 2022-03-25
+        data["BY3"] = "001"
+        data["BY3_DISPLAY"] = "打卡"
         wid, czrq, need_chk_date = get_sign_wid_info(s, data["BY3"])
         data["WID"] = wid
         data["CZRQ"] = czrq
