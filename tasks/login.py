@@ -9,7 +9,7 @@ from tasks.utils import *
 url = "http://authserver.njit.edu.cn/authserver/login?service=http%3A%2F%2Fehall.njit.edu.cn%2Flogin%3Fservice%3Dhttp%3A%2F%2Fehall.njit.edu.cn%2Fnew%2Findex.html"
 
 
-def retry(s, account, password):
+def retry(s, account, password) -> bool:
     require_captcha = need_captcha(s, account)
     captcha = ""
     while not check_captcha(captcha):
@@ -44,8 +44,8 @@ def retry(s, account, password):
     return len(s.cookies) != 2
 
 
-def get_login_session(account, password, retry_times=5):
-    s = get_session()
+def get_login_session(account: str, password: str, retry_times: int = 5) -> requests.Session:
+    s: requests.Session = get_session()
     while retry_times and not retry(s, account, password):
         retry_times -= 1
     return s

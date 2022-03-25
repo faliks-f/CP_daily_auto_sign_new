@@ -3,6 +3,8 @@
 import random
 import json
 
+import requests
+
 url = "http://ehallapp.njit.edu.cn/publicapp/sys/lwNjitHealthInfoDailyClock/configSet/noraml/getRouteConfig.do?v=06320772315700147"
 url1 = "http://ehallapp.njit.edu.cn/publicapp/sys/emappagelog/config/lwNjitHealthInfoDailyClock.do"
 url2 = "http://ehallapp.njit.edu.cn/publicapp/sys/lwNjitHealthInfoDailyClock/modules/healthClock/healthClock.html?av=3"
@@ -35,9 +37,12 @@ def is_checked(last_time, now_time):
     return True
 
 
-# return int
-# 1: success, 2: already checked, 3: error
-def sign(s) -> int:
+def sign(s: requests.Session) -> int:
+    """
+    sign in
+    :param s: the requests.Session object
+    :return: the sign result, 1: success, 2: already checked, 3: error
+    """
     try:
         res = s.get(url=url)
         res = s.get(url=url1)
