@@ -118,7 +118,6 @@ def sign(s):
         data["WID"] = wid
         data["CZRQ"] = czrq
         data["NEED_CHECKIN_DATE"] = need_chk_date
-        # print(data)
         res = s.post(url=url7, params=data)
         if res.json()["datas"]["T_HEALTH_DAILY_INFO_SAVE"]:
             return True
