@@ -25,8 +25,11 @@ def job():
                 if 'iPlanetDirectoryPro' not in s.cookies:
                     message += student["name"] + " fail! Login Error! Please check account and password!\n"
                 else:
-                    if sign(s):
-                        message += student["name"] + " success\n"
+                    sign_result: int = sign(s)
+                    if sign_result == 1:
+                        message += student["name"] + " sign success.\n"
+                    elif sign_result == 2:
+                        message += student["name"] + " already signed.\n"
                     else:
                         message += student["name"] + " fail! Login Success! Check Error!\n"
         except Exception as e:

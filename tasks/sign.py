@@ -35,7 +35,9 @@ def is_checked(last_time, now_time):
     return True
 
 
-def sign(s):
+# return int
+# 1: success, 2: already checked, 3: error
+def sign(s) -> int:
     try:
         res = s.get(url=url)
         res = s.get(url=url1)
@@ -50,7 +52,7 @@ def sign(s):
         res = s.post(url=url6)
         time = res.json()["date"].replace("/", "-")
         if is_checked(data["FILL_TIME"], time):
-            return True
+            return 2
         check_time = data["FILL_TIME"]
         data["CZR"] = None
         data["CZZXM"] = None
@@ -120,7 +122,7 @@ def sign(s):
         data["NEED_CHECKIN_DATE"] = need_chk_date
         res = s.post(url=url7, params=data)
         if res.json()["datas"]["T_HEALTH_DAILY_INFO_SAVE"]:
-            return True
+            return 1
     except Exception as e:
         print(e)
-    return False
+    return 3
