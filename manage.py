@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import json
+import sys
 import time
 
 import schedule
@@ -56,4 +57,14 @@ def sign_thread(threadName):
 
 
 if __name__ == '__main__':
-    sign_thread("sign")
+    runOnce: bool = False
+    # check cmd line args '-r'
+    for arg in sys.argv:
+        if arg == "-r":
+            runOnce = True
+    if runOnce:
+        print("Run once mode")
+        job()
+    else:
+        print("Run in daemon mode, use Ctrl+C to exit, add '-r' to run once")
+        sign_thread("sign")
