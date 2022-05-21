@@ -9,11 +9,16 @@ from tasks.utils import *
 url = "http://authserver.njit.edu.cn/authserver/login?service=http%3A%2F%2Fehall.njit.edu.cn%2Flogin%3Fservice%3Dhttp%3A%2F%2Fehall.njit.edu.cn%2Fnew%2Findex.html"
 
 
-def retry(s, account, password) -> bool:
-    require_captcha = need_captcha(s, account)
+def retry(s: requests.Session, account: str, password: str) -> bool:
+    require_captcha: bool = need_captcha(s, account)
     captcha = ""
     while not check_captcha(captcha):
         content = get_captcha(s)
+        # check whether b'<html>' in content
+        if b'<html>' in content:
+            print("ERROR: get_captcha() failed")
+            print("Response:", content)
+            raise Exception("get_captcha() failed, content:", content)
         captcha = predict_captcha(content)
     res = s.get(url)
     data = {

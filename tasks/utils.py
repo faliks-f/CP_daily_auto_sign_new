@@ -57,7 +57,7 @@ def pad(s: bytes, block_size: int) -> bytes:
     return s + pad_b * pad_num
 
 
-def need_captcha(session: requests.Session, account):
+def need_captcha(session: requests.Session, account) -> bool:
     NEED_CAPTCHA_URL = "http://authserver.njit.edu.cn" + "/authserver/needCaptcha.html"
     params = {
         'username': account,
@@ -68,7 +68,7 @@ def need_captcha(session: requests.Session, account):
     return True
 
 
-def get_captcha(s):
+def get_captcha(s: requests.Session) -> bytes:
     url = "http://authserver.njit.edu.cn" + "/authserver/captcha.html"
     params = {
         'ts': random.randint(1, 999)
