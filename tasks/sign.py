@@ -67,9 +67,6 @@ def sign(s: requests.Session) -> int:
         # TAG BEGIN fields changed since 2022-03-23
         data["TODAY_TEMPERATURE"] = "007"
         data["TODAY_TEMPERATURE_DISPLAY"] = "是"
-        # 疫苗接种情况：已完成三针型疫苗接种
-        data["TODAY_VACCINE_CONDITION"] = "008"
-        data["TODAY_VACCINE_CONDITION_DISPLAY"] = "已完成三针型疫苗接种"
         # 新学期开学以来是否返校
         # BY4_DISPLAY	"是"
         # BY4	"1"
