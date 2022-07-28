@@ -11,6 +11,7 @@ from tasks.sign import sign
 
 
 def job():
+    print(time.strftime("%Y-%m-%d %H:%M", time.localtime()))
     with open("configure.json", encoding="utf-8") as f:
         configure = json.load(f)
         students = configure["students"]
