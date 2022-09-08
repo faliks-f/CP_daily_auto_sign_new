@@ -70,8 +70,8 @@ def sign(s: requests.Session) -> int:
         # 新学期开学以来是否返校
         # BY4_DISPLAY	"是"
         # BY4	"1"
-        data["BY4_DISPLAY"] = "是"
-        data["BY4"] = "1"
+        # data["BY4_DISPLAY"] = "是"
+        # data["BY4"] = "1"
         # 是否处于南京市外中高风险地区
         # BY5_DISPLAY	"否"
         # BY5	"0"
